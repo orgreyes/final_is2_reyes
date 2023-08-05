@@ -1,6 +1,6 @@
 {
-    "name": "mindef/demo",
-    "description": "Proyecto MVC demo",
+    "name": "mindef/final_is2_reyes",
+    "description": "Proyecto final MVC",
     "type": "project",
     "config": {
         "platform-check": false
