@@ -9,10 +9,11 @@ class PacienteController{
 
 
         $pacientes = Paciente::all();
-        var_dump($pacientes);
-        exit;
+        
         
 
-        $router->render('pacientes/index');
+        $router->render('pacientes/index', [
+            'pacientes' => $pacientes,
+        ]); 
     }
 }
