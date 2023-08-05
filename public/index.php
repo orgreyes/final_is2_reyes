@@ -1,19 +1,18 @@
 <?php 
 require_once __DIR__ . '/../includes/app.php';
 
-//!Aca se colocan lar Rutas
+//!Aca se colocan Los Controladores
 use MVC\Router;
 use Controllers\AppController;
+use Controllers\PacienteController;
+
 $router = new Router();
 $router->setBaseURL('/' . $_ENV['APP_NAME']);
 
+//!Aca se colocan lar Rutas
 $router->get('/', [AppController::class,'index']);
-$router->get('/pacientes', [AppController::class,'pacientes']);
-$router->get('/citas', [AppController::class,'citas']);
-$router->get('/medicos', [AppController::class,'medicos']);
-$router->get('/clinicas', [AppController::class,'clinicas']);
-$router->get('/especialidades', [AppController::class,'especialidades']);
-$router->get('/detalles', [AppController::class,'detalles']);
+$router->get('/pacientes', [PacienteController::class,'index']);
+
 
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
