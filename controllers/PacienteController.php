@@ -1,6 +1,7 @@
 <?php
 
 namespace Controllers;
+use Exception;
 use Model\Paciente;
 use MVC\Router;
 
@@ -23,8 +24,18 @@ class PacienteController{
         try {
             $paciente = new Paciente($_POST);
             $resultado = $paciente->crear();
-            
-            echo json_encode($resultado);
+            if($resultado['resultado'] == 1){
+                echo json_encode([
+                    'mensaje' => 'Registro guardado correctamente',
+                    'codigo' => 1
+                ]);
+            }else{
+                echo json_encode([
+                    'mensaje' => 'Ocurrio un error',
+                    'codigo' => 0
+                ]);
+            }
+            // echo json_encode($resultado);
         } catch (Exception $e) {
             echo json_encode([
                 'detalle' => $e->getMessage(),
@@ -34,6 +45,58 @@ class PacienteController{
         }
     }
 
+    public static function modificarAPI(){
+        try{
+            $producto = new Paciente($_POST);
+            $resultado = $producto->actualizar();
+
+            if($resultado['resultado'] == 1){
+                echo json_encode([
+                    'mensaje' => 'Registro guardado correctamente',
+                    'codigo' => 1
+                ]);
+            }else{
+                echo json_encode([
+                    'mensaje' => 'Ocurrio un error',
+                    'codigo' => 0
+                ]);
+            }
+        }catch(Exception $e){
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje'=> 'Ocurrio un Error',
+                'codigo' => 0
+        ]);
+        }
+    }
+
+
+    public static function eliminarAPI(){
+        try{
+            $paciente_id = $_POST['paciente_id'];
+            $paciente = Paciente::find($paciente_id);
+            $paciente->paciente_situacion = 0;
+            $resultado = $paciente->actualizar();
+
+            if($resultado['resultado'] == 1){
+                echo json_encode([
+                    'mensaje' => 'Registro guardado correctamente',
+                    'codigo' => 1
+                ]);
+            }else{
+                echo json_encode([
+                    'mensaje' => 'Ocurrio un error',
+                    'codigo' => 0
+                ]);
+            }
+        }catch(Exception $e){
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje'=> 'Ocurrio un Error',
+                'codigo' => 0
+        ]);
+        }
+    }
 
     public static function buscarAPI(){
         // $pacientes = Paciente::all();

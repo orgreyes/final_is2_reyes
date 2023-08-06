@@ -212,14 +212,11 @@ const cancelarAccion = () => {
 
 //!Aca esta la funcion de modificar un registro
 const modificar = async () => {
-    const cliente_id = formulario.cliente_id.value;
-
-
+    const paciente_id = formulario.paciente_id.value;
     const body = new FormData(formulario);
-    body.append('tipo', 2);
-    body.append('cliente_id', cliente_id);
+    body.append('paciente_id', paciente_id);
 
-    const url = `/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php`;
+    const url = `/final_is2_reyes/API/pacientes/modificar`;
     const config = {
         method: 'POST',
         body,
@@ -267,8 +264,8 @@ const modificar = async () => {
 const eliminar = async (id) => {
     const result = await Swal.fire({
         icon: 'question',
-        title: 'Eliminar Cliente',
-        text: '¿Desea eliminar este Cliente?',
+        title: 'Eliminar paciente',
+        text: '¿Desea eliminar este paciente?',
         showCancelButton: true,
         confirmButtonText: 'Eliminar',
         cancelButtonText: 'Cancelar'
@@ -276,10 +273,9 @@ const eliminar = async (id) => {
 
     if (result.isConfirmed) {
         const body = new FormData();
-        body.append('tipo', 3);
-        body.append('cliente_id', id);
+        body.append('paciente_id', id);
 
-        const url = `/CRUD_JS/CRUD_JS_REYES/controladores/clientes/index.php`;
+        const url = `/final_is2_reyes/API/pacientes/eliminar`;
         const config = {
             method: 'POST',
             body,
@@ -288,9 +284,10 @@ const eliminar = async (id) => {
         try {
             const respuesta = await fetch(url, config);
             const data = await respuesta.json();
-
+            console.log(data);
             const { codigo, mensaje, detalle } = data;
 
+            let icon='info'
             switch (codigo) {
                 case 1:
                     buscar();
