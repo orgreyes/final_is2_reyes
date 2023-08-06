@@ -1,14 +1,14 @@
 
-<h1 class="text-center">Formulario de ingreso de Clinicas</h1>
+<h1 class="text-center">Formulario de ingreso de Especialidades</h1>
         <div class="row justify-content-center">
             <form class="col-lg-8 border bg-light p-3">
-            <input type="hidden" name="clinica_id" id="clinica_id">
+            <input type="hidden" name="espec_id" id="espec_id">
 
-            <!-- //!Nombre de la Clinica -->
+            <!-- //!Nombre de la Especialidad -->
                 <div class="row mb-3">
                     <div class="col">
-                    <label for="clinica_nombre">Nombre de la Clinica</label>
-                        <input type="text" name="clinica_nombre" id="clinica_nombre" class="form-control">
+                    <label for="espec_nombre">Nombre de la Especialidad</label>
+                        <input type="text" name="espec_nombre" id="espec_nombre" class="form-control">
                     </div>
                 </div>
 
@@ -31,12 +31,12 @@
         </div>
         <div class="row justify-content-center" id="divTabla">
             <div class="col-lg-8">
-                <h2>Listado de Clinicas</h2>
-                <table class="table table-bordered table-hover" id="tablaClinicas">
+                <h2>Listado de Especialidades</h2>
+                <table class="table table-bordered table-hover" id="tablaEspecialidades">
                     <thead class="table-dark">
                         <tr>
                             <th>NO. </th>
-                            <th>NOMBRE DE LA CLINICA</th>
+                            <th>NOMBRE DE LA ESPECIALIDAD</th>
                             <th>MODIFICAR</th>
                             <th>ELIMINAR</th>
                         </tr>
@@ -47,4 +47,4 @@
             </div>
         </div>
         </div>
-<script src="<?= asset('./build/js/clinicas/index.js') ?>"></script>
+<script src="<?= asset('./build/js/especialidades/index.js') ?>"></script>
