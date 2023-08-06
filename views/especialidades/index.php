@@ -1,30 +1,14 @@
 
-<h1 class="text-center">Formulario de ingreso de Medicos</h1>
+<h1 class="text-center">Formulario de ingreso de Clinicas</h1>
         <div class="row justify-content-center">
             <form class="col-lg-8 border bg-light p-3">
-            <input type="hidden" name="medico_id" id="medico_id">
+            <input type="hidden" name="clinica_id" id="clinica_id">
 
-            <!-- //!Nombre del Medico -->
+            <!-- //!Nombre de la Clinica -->
                 <div class="row mb-3">
                     <div class="col">
-                    <label for="medico_nombre">Nombre del Medico</label>
-                        <input type="text" name="medico_nombre" id="medico_nombre" class="form-control">
-                    </div>
-                </div>
-
-                <!-- //!Especialidad del Medico -->
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="medico_espec">Especialidad del Medico</label>
-                        <input type="text" name="medico_espec" id="medico_espec" class="form-control">
-                    </div>
-                </div>
-
-                <!-- //!Clinica del Medico -->
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="medico_clinica">Clinica del Medico</label>
-                        <input type="text" name="medico_clinica" id="medico_clinica" class="form-control">
+                    <label for="clinica_nombre">Nombre de la Clinica</label>
+                        <input type="text" name="clinica_nombre" id="clinica_nombre" class="form-control">
                     </div>
                 </div>
 
@@ -47,14 +31,12 @@
         </div>
         <div class="row justify-content-center" id="divTabla">
             <div class="col-lg-8">
-                <h2>Listado de Medicos</h2>
-                <table class="table table-bordered table-hover" id="tablaMedicos">
+                <h2>Listado de Clinicas</h2>
+                <table class="table table-bordered table-hover" id="tablaClinicas">
                     <thead class="table-dark">
                         <tr>
                             <th>NO. </th>
-                            <th>NOMBRE</th>
-                            <th>ESPECIALIDAD</th>
-                            <th>CLINICA</th>
+                            <th>NOMBRE DE LA CLINICA</th>
                             <th>MODIFICAR</th>
                             <th>ELIMINAR</th>
                         </tr>
@@ -65,4 +47,4 @@
             </div>
         </div>
         </div>
-<script src="<?= asset('./build/js/medicos/index.js') ?>"></script>
+<script src="<?= asset('./build/js/clinicas/index.js') ?>"></script>

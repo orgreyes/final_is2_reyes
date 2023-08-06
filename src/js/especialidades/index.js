@@ -25,7 +25,7 @@ btnCancelar.parentElement.style.display = 'none'
 const guardar = async (evento) => {
     evento.preventDefault();
 
-    if (!validarFormulario(formulario,['medico_id'])){
+    if (!validarFormulario(formulario,['clinica_id'])){
         Swal.fire({
             title: 'Campos incompletos',
             text: 'Debe llenar todos los campos del formulario',
@@ -39,8 +39,8 @@ const guardar = async (evento) => {
     }
 
     const body = new FormData(formulario)
-    body.delete('medico_id')
-    const url ='/final_is2_reyes/API/medicos/guardar';
+    body.delete('clinica_id')
+    const url ='/final_is2_reyes/API/clinicas/guardar';
     const config = {
         method : 'POST',
         body
@@ -93,10 +93,8 @@ const guardar = async (evento) => {
 
 //!Aca esta la funcion de Buscar.
 const buscar = async () => {
-    let medico_nombre = formulario.medico_nombre.value;
-    let medico_espec = formulario.medico_espec.value;
-    let medico_clinica = formulario.medico_clinica.value;
-    const url =`/final_is2_reyes/API/medicos/buscar?medico_nombre=${medico_nombre}&medico_espec=${medico_espec}&medico_clinica=${medico_clinica}`;
+    let clinica_nombre = formulario.clinica_nombre.value;
+    const url =`/final_is2_reyes/API/clinicas/buscar?clinica_nombre=${clinica_nombre}`;
     const config = {
         method : 'GET',
     }
@@ -105,7 +103,7 @@ const buscar = async () => {
         const respuesta = await fetch(url,config)
         const data = await respuesta.json();
 
-        console.log(console.log(tablaMedicos.tBodies[0].innerHTML = ''));
+        console.log(console.log(tablaClinicas.tBodies[0].innerHTML = ''));
         console.log(data);
         
 
@@ -114,7 +112,7 @@ const buscar = async () => {
 
         if(data.length > 0){
             let contador = 1;
-            data.forEach(medico => {
+            data.forEach(clinica => {
 
                 //!Aca se crean los elementos
                 const tr = document.createElement('tr');
@@ -122,8 +120,6 @@ const buscar = async () => {
                 const td2 = document.createElement('td');
                 const td3 = document.createElement('td');
                 const td4 = document.createElement('td');
-                const td5 = document.createElement('td');
-                const td6= document.createElement('td');
                 const buttonModificar = document.createElement('button');
                 const buttonEliminar = document.createElement('button');
 
@@ -134,23 +130,19 @@ const buscar = async () => {
                 buttonEliminar.textContent = 'Eliminar';
 
                 //!Aca se agrega interactividad a los botnes de modificar y eliminar.
-                buttonModificar.addEventListener('click', () =>  colocarDatos(medico))
-                buttonEliminar.addEventListener('click', () => eliminar(medico.medico_id))
+                buttonModificar.addEventListener('click', () =>  colocarDatos(clinica))
+                buttonEliminar.addEventListener('click', () => eliminar(clinica.clinica_id))
                 
                 td1.innerText = contador;
-                td2.innerText = medico.medico_nombre
-                td3.innerText = medico.medico_espec
-                td4.innerText = medico.medico_clinica
+                td2.innerText = clinica.clinica_nombre
 
                 //!DOM
-                td5.appendChild(buttonModificar);
-                td6.appendChild(buttonEliminar);
+                td3.appendChild(buttonModificar);
+                td4.appendChild(buttonEliminar);
                 tr.appendChild(td1)
                 tr.appendChild(td2)
                 tr.appendChild(td3)
                 tr.appendChild(td4)
-                tr.appendChild(td5)
-                tr.appendChild(td6)
 
                 fragment.appendChild(tr);
                 contador++;
@@ -166,7 +158,7 @@ const buscar = async () => {
 
         };
 
-        tablaMedicos.tBodies[0].appendChild(fragment)
+        tablaClinicas.tBodies[0].appendChild(fragment)
 
     }catch (error){
         console.log(error)
@@ -177,10 +169,8 @@ const buscar = async () => {
 //!Aca esta la funcion para que al pulsar el bonton de modificar
 //!se agregen los datos en automatico a el formulario.
 const colocarDatos = (datos) => {
-    formulario.medico_nombre.value = datos.medico_nombre
-    formulario.medico_espec.value = datos.medico_espec
-    formulario.medico_clinica.value = datos.medico_clinica
-    formulario.medico_id.value = datos.medico_id
+    formulario.clinica_nombre.value = datos.clinica_nombre
+    formulario.clinica_id.value = datos.clinica_id
 
     btnGuardar.disabled = true
     btnGuardar.parentElement.style.display = 'none'
@@ -211,11 +201,11 @@ const cancelarAccion = () => {
 
 //!Aca esta la funcion de modificar un registro
 const modificar = async () => {
-    const medico_id = formulario.medico_id.value;
+    const clinica_id = formulario.clinica_id.value;
     const body = new FormData(formulario);
-    body.append('medico_id', medico_id);
+    body.append('clinica_id', clinica_id);
 
-    const url = `/final_is2_reyes/API/medicos/modificar`;
+    const url = `/final_is2_reyes/API/clinicas/modificar`;
     const config = {
         method: 'POST',
         body,
@@ -263,8 +253,8 @@ const modificar = async () => {
 const eliminar = async (id) => {
     const result = await Swal.fire({
         icon: 'question',
-        title: 'Eliminar medico',
-        text: '¿Desea eliminar este medico?',
+        title: 'Eliminar clinica',
+        text: '¿Desea eliminar este clinica?',
         showCancelButton: true,
         confirmButtonText: 'Eliminar',
         cancelButtonText: 'Cancelar'
@@ -272,9 +262,9 @@ const eliminar = async (id) => {
 
     if (result.isConfirmed) {
         const body = new FormData();
-        body.append('medico_id', id);
+        body.append('clinica_id', id);
 
-        const url = `/final_is2_reyes/API/medicos/eliminar`;
+        const url = `/final_is2_reyes/API/clinicas/eliminar`;
         const config = {
             method: 'POST',
             body,

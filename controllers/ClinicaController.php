@@ -2,19 +2,19 @@
 
 namespace Controllers;
 use Exception;
-use Model\Medico;
+use Model\Clinica;
 use MVC\Router;
 
-class MedicoController{
+class ClinicaController{
     public static function index(Router $router){
 
 
-        $medicos = Medico::all();
+        $clinicas = Clinica::all();
         
         
 
-        $router->render('medicos/index', [
-            'medicos' => $medicos,
+        $router->render('clinicas/index', [
+            'clinicas' => $clinicas,
         ]); 
     }
 
@@ -22,8 +22,8 @@ class MedicoController{
 //!Funcion Guardar
     public static function guardarAPI(){
         try {
-            $medico = new Medico($_POST);
-            $resultado = $medico->crear();
+            $clinica = new Clinica($_POST);
+            $resultado = $clinica->crear();
             if($resultado['resultado'] == 1){
                 echo json_encode([
                     'mensaje' => 'Registro guardado correctamente',
@@ -48,8 +48,8 @@ class MedicoController{
 //!Funcion Modificar
     public static function modificarAPI(){
         try{
-            $medico = new Medico($_POST);
-            $resultado = $medico->actualizar();
+            $clinica = new Clinica($_POST);
+            $resultado = $clinica->actualizar();
 
             if($resultado['resultado'] == 1){
                 echo json_encode([
@@ -74,10 +74,10 @@ class MedicoController{
 //!Funcion Eliminar
     public static function eliminarAPI(){
         try{
-            $medico_id = $_POST['medico_id'];
-            $medico = Medico::find($medico_id);
-            $medico->medico_situacion = 0;
-            $resultado = $medico->actualizar();
+            $clinica_id = $_POST['clinica_id'];
+            $clinica = Clinica::find($clinica_id);
+            $clinica->clinica_situacion = 0;
+            $resultado = $clinica->actualizar();
 
             if($resultado['resultado'] == 1){
                 echo json_encode([
@@ -102,26 +102,18 @@ class MedicoController{
 
 //!Funcion Buscar
     public static function buscarAPI(){
-        $medico_nombre = $_GET['medico_nombre'];
-        // $medico_espc = $_GET['medico_espc'];
-        // $medico_clinica = $_GET['medico_clinica'];
+        $clinica_nombre = $_GET['clinica_nombre'];
 
-        $sql = "SELECT * FROM medicos WHERE medico_situacion = 1 ";
-        if($medico_nombre != ''){
-            $sql .= "AND medico_nombre LIKE '%$medico_nombre%' ";
+
+        $sql = "SELECT * FROM clinicas WHERE clinica_situacion = 1 ";
+        if($clinica_nombre != ''){
+            $sql .= "AND clinica_nombre LIKE '%$clinica_nombre%' ";
         }
 
-        // if($medico_espec != ''){
-        //     $sql .= "AND medico_espec LIKE '%$medico_espec%' ";
-        // }
-
-        // if($medico_situacion != ''){
-        //     $sql .= "AND medico_situacion$medico_situacion LIKE '%$medico_situacion%' ";
-        // }
 
         try {
-            $medicos = Medico::fetchArray($sql);
-            echo json_encode($medicos);
+            $clinicas = Clinica::fetchArray($sql);
+            echo json_encode($clinicas);
             
         } catch (exception $e) {
                 echo json_encode([

@@ -47,8 +47,8 @@ class PacienteController{
 
     public static function modificarAPI(){
         try{
-            $producto = new Paciente($_POST);
-            $resultado = $producto->actualizar();
+            $paciente = new Paciente($_POST);
+            $resultado = $paciente->actualizar();
 
             if($resultado['resultado'] == 1){
                 echo json_encode([
