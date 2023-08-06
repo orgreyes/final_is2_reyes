@@ -1,5 +1,4 @@
 <!-- Aca ira el formulario de ingreso y busqueda de pacientes -->
-<div class="container">
         <h1 class="text-center">Formulario de ingreso de pacientes</h1>
         <div class="row justify-content-center">
             <form class="col-lg-8 border bg-light p-3">
@@ -16,24 +15,16 @@
                 <!-- //!DPI del Paciente -->
                 <div class="row mb-3">
                     <div class="col">
-                        <label for="paciente_nit">DPI del paciente</label>
-                        <input type="text" name="paciente_nit" id="paciente_nit" class="form-control">
+                        <label for="paciente_dpi">DPI del paciente</label>
+                        <input type="number" name="paciente_dpi" id="paciente_dpi" class="form-control">
                     </div>
                 </div>
 
                 <!-- //!Telefono del Paciente -->
                 <div class="row mb-3">
                     <div class="col">
-                        <label for="paciente_nit">Telefono del paciente</label>
-                        <input type="text" name="paciente_nit" id="paciente_nit" class="form-control">
-                    </div>
-                </div>
-
-            <!-- //!NIT del Paciente -->
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="paciente_nit">NIT del paciente</label>
-                        <input type="text" name="paciente_nit" id="paciente_nit" class="form-control">
+                        <label for="paciente_telefono">Telefono del paciente</label>
+                        <input type="number" name="paciente_telefono" id="paciente_telefono" class="form-control">
                     </div>
                 </div>
 
@@ -56,13 +47,14 @@
         </div>
         <div class="row justify-content-center" id="divTabla">
             <div class="col-lg-8">
-                <h2>Listado de Clientes</h2>
-                <table class="table table-bordered table-hover" id="tablaClientes">
+                <h2>Listado de Pacientes</h2>
+                <table class="table table-bordered table-hover" id="tablaPacientes">
                     <thead class="table-dark">
                         <tr>
                             <th>NO. </th>
                             <th>NOMBRE</th>
-                            <th>NIT</th>
+                            <th>DPI</th>
+                            <th>TELEFONO</th>
                             <th>MODIFICAR</th>
                             <th>ELIMINAR</th>
                         </tr>
@@ -73,3 +65,4 @@
             </div>
         </div>
         </div>
+<script src="<?= asset('./build/js/pacientes/index.js') ?>"></script>
