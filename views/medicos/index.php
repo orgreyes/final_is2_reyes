@@ -12,19 +12,29 @@
                     </div>
                 </div>
 
-                <!-- //!Especialidad del Medico -->
+                <!-- //!Clinica del Medico -->
                 <div class="row mb-3">
-                    <div class="col">
-                        <label for="medico_espec">Especialidad del Medico</label>
-                        <input type="text" name="medico_espec" id="medico_espec" class="form-control">
+                    <div class="col-lg-12">
+                        <label for="medico_clinica">Clinicas</label>
+                        <select class="form-control" name="medico_clinica" id="medico_clinica">
+                            <option value="">Seleccione una Clinica...</option>
+                                <?php foreach ($clinicas as $key => $clinica) : ?>
+                                        <option value="<?= $clinica['clinica_id'] ?>"> <?= $clinica['clinica_nombre'] ?></option>
+                                <?php endforeach ?>
+                        </select>
                     </div>
                 </div>
 
-                <!-- //!Clinica del Medico -->
+                <!-- //!Especialidad del Medico -->
                 <div class="row mb-3">
-                    <div class="col">
-                        <label for="medico_clinica">Clinica del Medico</label>
-                        <input type="text" name="medico_clinica" id="medico_clinica" class="form-control">
+                    <div class="col-lg-12">
+                        <label for="medico_espec">Especialidades</label>
+                        <select class="form-control" name="medico_espec" id="medico_espec">
+                            <option value="">Seleccione una Especialidad...</option>
+                                <?php foreach ($especialidades as $key => $especialidad) : ?>
+                                        <option value="<?= $especialidad['espec_id'] ?>"> <?= $especialidad['espec_nombre'] ?></option>
+                                <?php endforeach ?>
+                        </select>
                     </div>
                 </div>
 
