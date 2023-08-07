@@ -3,7 +3,7 @@ import { validarFormulario } from "../funciones";
 
 const formulario = document.querySelector('form');
 const btnBuscar = document.getElementById('btnBuscar');
-const tablaMedicos = document.getElementById('tablaMedicos');
+const tablaCitas = document.getElementById('tablaCitas');
 const btnGuardar = document.getElementById('btnGuardar');
 const btnModificar = document.getElementById('btnModificar');
 const btnCancelar = document.getElementById('btnCancelar');
@@ -76,6 +76,9 @@ const guardar = async (evento) => {
     }
 };
 
+
+
+//!Funcion Buscar
 const buscar = async () => {
     let cita_paciente = formulario.cita_paciente.value;
     let cita_medico = formulario.cita_medico.value;
@@ -156,13 +159,14 @@ const buscar = async () => {
 };
 
 
-
-
+//!Funcion para Colocar Datos
 const colocarDatos = (datos) => {
-    formulario.medico_nombre.value = datos.medico_nombre
-    formulario.medico_espec.value = datos.medico_espec
-    formulario.medico_clinica.value = datos.medico_clinica
-    formulario.medico_id.value = datos.medico_id
+    formulario.cita_id.value = datos.cita_id
+    formulario.cita_paciente.value = datos.cita_paciente
+    formulario.cita_medico.value = datos.cita_medico
+    formulario.cita_fecha.value = datos.cita_fecha
+    formulario.cita_hora.value = datos.cita_hora
+    formulario.cita_referencia.value = datos.cita_referencia
 
     btnGuardar.disabled = true
     btnGuardar.parentElement.style.display = 'none'
@@ -187,12 +191,13 @@ const cancelarAccion = () => {
     divTabla.style.display = ''
 };
 
+//!Aca esta la funcion de modificar un registro
 const modificar = async () => {
-    const medico_id = formulario.medico_id.value;
+    const cita_id = formulario.cita_id.value;
     const body = new FormData(formulario);
-    body.append('medico_id', medico_id);
+    body.append('cita_id', cita_id);
 
-    const url = `/final_is2_reyes/API/medicos/modificar`;
+    const url = `/final_is2_reyes/API/citas/modificar`;
     const config = {
         method: 'POST',
         body,
@@ -234,11 +239,14 @@ const modificar = async () => {
     }
 };
 
+
+
+//!Funcion Eliminr
 const eliminar = async (id) => {
     const result = await Swal.fire({
         icon: 'question',
-        title: 'Eliminar medico',
-        text: '¿Desea eliminar este medico?',
+        title: 'Eliminar cita',
+        text: '¿Desea eliminar este cita?',
         showCancelButton: true,
         confirmButtonText: 'Eliminar',
         cancelButtonText: 'Cancelar'
@@ -246,9 +254,9 @@ const eliminar = async (id) => {
 
     if (result.isConfirmed) {
         const body = new FormData();
-        body.append('medico_id', id);
+        body.append('cita_id', id);
 
-        const url = `/final_is2_reyes/API/medicos/eliminar`;
+        const url = `/final_is2_reyes/API/citas/eliminar`;
         const config = {
             method: 'POST',
             body,
@@ -260,7 +268,6 @@ const eliminar = async (id) => {
             console.log(data);
             const { codigo, mensaje, detalle } = data;
 
-            let icon='info'
             switch (codigo) {
                 case 1:
                     buscar();

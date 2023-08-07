@@ -84,63 +84,67 @@ public static function buscarMedicos(){
     }
 
 //!Funcion Modificar
-    public static function modificarAPI(){
-        try{
-            $cita = new Cita($_POST);
-            $resultado = $cita->actualizar();
+public static function modificarAPI(){
+    try{
+        $cita = new Cita($_POST);
+        $resultado = $cita->actualizar();        
+        // echo json_encode($cita);
+        // exit;
 
-            if($resultado['resultado'] == 1){
-                echo json_encode([
-                    'mensaje' => 'Registro guardado correctamente',
-                    'codigo' => 1
-                ]);
-            }else{
-                echo json_encode([
-                    'mensaje' => 'Ocurrio un error',
-                    'codigo' => 0
-                ]);
-            }
-        }catch(Exception $e){
+        if($resultado['resultado'] == 1){
             echo json_encode([
-                'detalle' => $e->getMessage(),
-                'mensaje'=> 'Ocurrio un Error',
+                'mensaje' => 'Registro guardado correctamente',
+                'codigo' => 1
+            ]);
+        }else{
+            echo json_encode([
+                'mensaje' => 'Ocurrio un error',
                 'codigo' => 0
-        ]);
+            ]);
         }
+    }catch(Exception $e){
+        echo json_encode([
+            'detalle' => $e->getMessage(),
+            'mensaje'=> 'Ocurrio un Error',
+            'codigo' => 0
+    ]);
     }
+}
 
 //!Funcion Eliminar
-    public static function eliminarAPI(){
-        try{
-            $cita_id = $_POST['cita_id'];
-            $cita = Cita::find($cita_id);
-            $cita->cita_situacion = 0;
-            $resultado = $cita->actualizar();
+public static function eliminarAPI(){
+    try{
+        $cita_id = $_POST['cita_id'];
+        $cita = Cita::find($cita_id);
+        // echo json_encode($cita);
+        // exit;
+        $cita->cita_situacion = 0;
+        $resultado = $cita->actualizar();
 
-            if($resultado['resultado'] == 1){
-                echo json_encode([
-                    'mensaje' => 'Registro guardado correctamente',
-                    'codigo' => 1
-                ]);
-            }else{
-                echo json_encode([
-                    'mensaje' => 'Ocurrio un error',
-                    'codigo' => 0
-                ]);
-            }
-        }catch(Exception $e){
+        if($resultado['resultado'] == 1){
             echo json_encode([
-                'detalle' => $e->getMessage(),
-                'mensaje'=> 'Ocurrio un Error',
+                'mensaje' => 'Registro se Elimino correctamente',
+                'codigo' => 1
+            ]);
+        }else{
+            echo json_encode([
+                'mensaje' => 'Ocurrio un error',
                 'codigo' => 0
-        ]);
+            ]);
         }
+    }catch(Exception $e){
+        echo json_encode([
+            'detalle' => $e->getMessage(),
+            'mensaje'=> 'Ocurrio un Error',
+            'codigo' => 0
+    ]);
     }
+}
 
 
 // !Funcion Buscar
-public static function buscarAPI() {
-
+public static function buscarAPI()
+{
     $sql = "SELECT citas.cita_id, 
                    pacientes.paciente_nombre, 
                    medicos.medico_nombre,
@@ -151,7 +155,24 @@ public static function buscarAPI() {
             JOIN pacientes ON citas.cita_paciente = pacientes.paciente_id 
             JOIN medicos ON citas.cita_medico = medicos.medico_id 
             WHERE citas.cita_situacion = 1";
-  
+
+    // Agregamos las condiciones de búsqueda según los parámetros recibidos
+    if (!empty($cita_paciente)) {
+        $sql .= " AND pacientes.paciente_id = '$cita_paciente'";
+    }
+    if (!empty($cita_medico)) {
+        $sql .= " AND medicos.medico_id = '$cita_medico'";
+    }
+    if (!empty($cita_fecha)) {
+        $sql .= " AND citas.cita_fecha = '$cita_fecha'";
+    }
+    if (!empty($cita_hora)) {
+        $sql .= " AND citas.cita_hora = '$cita_hora'";
+    }
+    if (!empty($cita_referencia)) {
+        $sql .= " AND citas.cita_referencia = '$cita_referencia'";
+    }
+
     try {
         $citas = Cita::fetchArray($sql);
         header('Content-Type: application/json');
@@ -164,7 +185,7 @@ public static function buscarAPI() {
             'codigo' => 0
         ]);
     }
-}  
+} 
 
 
 }

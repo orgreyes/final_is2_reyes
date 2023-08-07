@@ -50,7 +50,9 @@ class ClinicaController{
         try{
             $clinica = new Clinica($_POST);
             $resultado = $clinica->actualizar();
-
+            // echo json_encode($clinica);
+            // exit;
+    
             if($resultado['resultado'] == 1){
                 echo json_encode([
                     'mensaje' => 'Registro guardado correctamente',
