@@ -110,37 +110,39 @@ public static function buscarEspecialidades(){
     }
 
 //!Funcion Eliminar
-    public static function eliminarAPI(){
-        try{
-            $medico_id = $_POST['medico_id'];
-            $medico = Medico::find($medico_id);
-            $medico->medico_situacion = 0;
-            $resultado = $medico->actualizar();
+public static function eliminarAPI(){
+    try{
+        $medico_id = $_POST['medico_id'];
+        $medico = Medico::find($medico_id);
+        $medico->medico_situacion = 0;
+        $resultado = $medico->actualizar();
 
-            if($resultado['resultado'] == 1){
-                echo json_encode([
-                    'mensaje' => 'Registro guardado correctamente',
-                    'codigo' => 1
-                ]);
-            }else{
-                echo json_encode([
-                    'mensaje' => 'Ocurrio un error',
-                    'codigo' => 0
-                ]);
-            }
-        }catch(Exception $e){
+        if($resultado['resultado'] == 1){
             echo json_encode([
-                'detalle' => $e->getMessage(),
-                'mensaje'=> 'Ocurrio un Error',
+                'mensaje' => 'Registro Elimino correctamente',
+                'codigo' => 1
+            ]);
+        }else{
+            echo json_encode([
+                'mensaje' => 'Ocurrio un error',
                 'codigo' => 0
-        ]);
+            ]);
         }
+    }catch(Exception $e){
+        echo json_encode([
+            'detalle' => $e->getMessage(),
+            'mensaje'=> 'Ocurrio un Error',
+            'codigo' => 0
+    ]);
     }
+}
 
 
 // !Funcion Buscar
 public static function buscarAPI(){
     $medico_nombre = $_GET['medico_nombre'];
+    $medico_clinica = $_GET['medico_clinica'];
+    $medico_espec = $_GET['medico_espec'];
 
     $sql = "SELECT medicos.medico_id, medicos.medico_nombre, especialidades.espec_nombre AS medico_espec_nombre, clinicas.clinica_nombre AS medico_clinica_nombre 
     FROM medicos 
@@ -152,11 +154,19 @@ public static function buscarAPI(){
         $sql .= " AND medicos.medico_nombre LIKE '%$medico_nombre%' ";
     }
 
+    if($medico_clinica != ''){
+        $sql .= " AND clinicas.clinica_nombre LIKE '%$medico_clinica%' ";
+    }
+
+    if($medico_espec != ''){
+        $sql .= " AND especialidades.espec_nombre LIKE '%$medico_espec%' ";
+    }
+
     try {
         $medicos = Medico::fetchArray($sql);
         echo json_encode($medicos);
         
-    } catch (exception $e) {
+    } catch (Exception $e) {
         echo json_encode([
             'detalle' => $e->getMessage(),
             'mensaje'=> 'Ocurrio un Error',
@@ -164,7 +174,6 @@ public static function buscarAPI(){
         ]);
     }
 }
-
 
 
 }

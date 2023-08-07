@@ -9,6 +9,7 @@ use Controllers\ClinicaController;
 use Controllers\EspecialidadController;
 use Controllers\MedicoController;
 use Controllers\CitaController;
+use Controllers\DetalleCitasController;
 
 $router = new Router();
 $router->setBaseURL('/' . $_ENV['APP_NAME']);
@@ -56,6 +57,10 @@ $router->post('/API/citas/modificar', [CitaController::class,'modificarAPI']);
 $router->post('/API/citas/guardar', [CitaController::class,'guardarAPI']);
 $router->post('/API/citas/eliminar', [CitaController::class,'eliminarAPI']);
 $router->get('/API/citas/buscar', [CitaController::class,'buscarAPI']);
+
+
+//!Aca se colocan lar Rutas para Detalle cita
+$router->get('/detallecitas', [DetalleCitasController::class,'index']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

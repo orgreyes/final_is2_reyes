@@ -89,7 +89,7 @@ const buscar = async () => {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
 
-        tablaMedicos.tBodies[0].innerHTML = '';
+        console.log(console.log(tablaMedicos.tBodies[0].innerHTML = ''));
         console.log(data);
 
         const fragment = document.createDocumentFragment();
