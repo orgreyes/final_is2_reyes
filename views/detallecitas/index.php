@@ -3,7 +3,7 @@
         <?php foreach ($citasPorFechas as $fecha => $citasPorClinica) : ?>
             <?php $formattedDate = date('d/M/Y', strtotime($fecha)); ?>
             <?php $isToday = date('Y-m-d') === $fecha; ?>
-            <h2><?= $isToday ? 'Fecha de hoy' : 'Fecha de la cita (' . $formattedDate . ')' ?></h2>
+            <h2><?= $isToday ? 'Citas Para el Dia de Hoy (' . $formattedDate . ')' : 'Fecha de la cita (' . $formattedDate . ')' ?></h2>
             <?php foreach ($citasPorClinica as $clinica => $citasPorMedico) : ?>
                 <?php $medicoNombre = key($citasPorMedico); ?>
                 <h3><?= $clinica ?> (Medico <?= $medicoNombre ?>)</h3>
