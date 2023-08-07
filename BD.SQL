@@ -42,15 +42,3 @@ CREATE TABLE citas (
     FOREIGN KEY (cita_paciente) REFERENCES pacientes (paciente_id),
     FOREIGN KEY (cita_medico) REFERENCES medicos (medico_id)
 );
-
-create table detalles(
-    detalle_id serial not null,
-    detalle_cita integer not null,
-    detalle_paciente integer not null,
-    detalle_medico integer not null,
-    detalle_situacion smallint not null default 1,
-    primary key (detalle_id),
-    foreign key (detalle_cita) REFERENCES citas (cita_id),
-    foreign key (detalle_paciente) REFERENCES pacientes (paciente_id),
-    foreign key (detalle_medico) REFERENCES medicos (medico_id)
-);

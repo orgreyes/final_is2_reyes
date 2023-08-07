@@ -34,7 +34,7 @@
                 <div class="row mb-3">
                     <div class="col">
                     <label for="cita_fecha">Fecha de la Cita</label>
-                        <input type="date" value="<?= date('Y-d-m') ?>" name="cita_fecha" id="cita_fecha" class="form-control">
+                        <input type="date" value="<?= date('Y-m-d') ?>" name="cita_fecha" id="cita_fecha" class="form-control">
                     </div>
                 </div>
 

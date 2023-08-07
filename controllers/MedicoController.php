@@ -140,11 +140,12 @@ public static function eliminarAPI(){
 
 // !Funcion Buscar
 public static function buscarAPI(){
-    $medico_nombre = $_GET['medico_nombre'];
-    $medico_clinica = $_GET['medico_clinica'];
-    $medico_espec = $_GET['medico_espec'];
+    $medico_nombre = $_GET['medico_nombre'] ?? '';
+    $medico_clinica = $_GET['medico_clinica'] ?? '';
+    $medico_espec = $_GET['medico_espec'] ?? '';
 
-    $sql = "SELECT medicos.medico_id, medicos.medico_nombre, especialidades.espec_nombre AS medico_espec_nombre, clinicas.clinica_nombre AS medico_clinica_nombre 
+    $sql = "SELECT 
+    medicos.medico_nombre, especialidades.espec_nombre AS medico_espec_nombre, clinicas.clinica_nombre AS medico_clinica_nombre 
     FROM medicos 
     INNER JOIN especialidades ON medicos.medico_espec = especialidades.espec_id
     INNER JOIN clinicas ON medicos.medico_clinica = clinicas.clinica_id
@@ -155,11 +156,11 @@ public static function buscarAPI(){
     }
 
     if($medico_clinica != ''){
-        $sql .= " AND clinicas.clinica_nombre LIKE '%$medico_clinica%' ";
+        $sql .= " AND clinicas.clinica_nombre = '$medico_clinica' ";
     }
 
     if($medico_espec != ''){
-        $sql .= " AND especialidades.espec_nombre LIKE '%$medico_espec%' ";
+        $sql .= " AND especialidades.espec_nombre = '$medico_espec' ";
     }
 
     try {

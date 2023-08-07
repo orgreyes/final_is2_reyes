@@ -94,7 +94,7 @@ const buscar = async () => {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
 
-        tablaCitas.tBodies[0].innerHTML = '';
+        console.log(console.log(tablaCitas.tBodies[0].innerHTML = ''));
         console.log(data);
 
         const fragment = document.createDocumentFragment();
@@ -125,7 +125,7 @@ const buscar = async () => {
                 td1.innerText = contador;
                 td2.innerText = cita.paciente_nombre;
                 td3.innerText = cita.medico_nombre;
-                td4.innerText = cita.cita_fecha;                
+                td4.innerText = cita.cita_fecha.trim();;                
                 td5.innerText = cita.cita_hora;                
                 td6.innerText = cita.cita_referencia;
 
@@ -165,7 +165,7 @@ const colocarDatos = (datos) => {
     formulario.cita_paciente.value = datos.cita_paciente
     formulario.cita_medico.value = datos.cita_medico
     formulario.cita_fecha.value = datos.cita_fecha
-    formulario.cita_hora.value = datos.cita_hora
+    formulario.cita_hora.value = datos.cita_hora.trim()
     formulario.cita_referencia.value = datos.cita_referencia
 
     btnGuardar.disabled = true

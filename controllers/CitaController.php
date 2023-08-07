@@ -142,35 +142,57 @@ public static function eliminarAPI(){
 }
 
 
+
+
+
 // !Funcion Buscar
 public static function buscarAPI()
 {
-    $sql = "SELECT citas.cita_id, 
-                   pacientes.paciente_nombre, 
-                   medicos.medico_nombre,
-                   citas.cita_fecha,
-                   citas.cita_hora,
-                   citas.cita_referencia
-            FROM citas 
-            JOIN pacientes ON citas.cita_paciente = pacientes.paciente_id 
-            JOIN medicos ON citas.cita_medico = medicos.medico_id 
-            WHERE citas.cita_situacion = 1";
+    $paciente_nombre = $_GET['paciente_nombre'] ?? '';
+    $medico_nombre = $_GET['medico_nombre'] ?? '';
+    $cita_paciente = $_GET['cita_paciente'] ?? '';
+    $cita_medico = $_GET['cita_medico'] ?? '';
+    $cita_fecha = $_GET['cita_fecha'] ?? '';
+    $cita_hora = $_GET['cita_hora'] ?? '';
+    $cita_referencia = $_GET['cita_referencia'] ?? '';
+
+    $sql = "SELECT
+    p.paciente_nombre,
+    m.medico_nombre,
+    c.cita_paciente,
+    c.cita_medico,
+    c.cita_fecha,
+    c.cita_hora,
+    c.cita_referencia,
+    c.cita_id
+FROM
+    citas c
+    INNER JOIN pacientes p ON c.cita_paciente = p.paciente_id
+    INNER JOIN medicos m ON c.cita_medico = m.medico_id
+WHERE
+    c.cita_situacion = 1";
 
     // Agregamos las condiciones de búsqueda según los parámetros recibidos
+    if (!empty($paciente_nombre)) {
+        $sql .= " AND p.paciente_nombre LIKE '%$paciente_nombre%'";
+    }
+    if (!empty($medico_nombre)) {
+        $sql .= " AND m.medico_nombre LIKE '%$medico_nombre%'";
+    }
     if (!empty($cita_paciente)) {
-        $sql .= " AND pacientes.paciente_id = '$cita_paciente'";
+        $sql .= " AND c.cita_paciente = '$cita_paciente'";
     }
-    if (!empty($cita_medico)) {
-        $sql .= " AND medicos.medico_id = '$cita_medico'";
-    }
-    if (!empty($cita_fecha)) {
-        $sql .= " AND citas.cita_fecha = '$cita_fecha'";
-    }
-    if (!empty($cita_hora)) {
-        $sql .= " AND citas.cita_hora = '$cita_hora'";
-    }
+    // if (!empty($cita_medico)) {
+    //     $sql .= " AND c.cita_medico = '$cita_medico'";
+    // }
+    // if (!empty($cita_fecha)) {
+    //     $sql .= " AND c.cita_fecha = '$cita_fecha'";
+    // }
+    // if (!empty($cita_hora)) {
+    //     $sql .= " AND c.cita_hora = '$cita_hora'";
+    // }
     if (!empty($cita_referencia)) {
-        $sql .= " AND citas.cita_referencia = '$cita_referencia'";
+        $sql .= " AND c.cita_referencia = '$cita_referencia'";
     }
 
     try {
