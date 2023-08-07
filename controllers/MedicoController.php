@@ -141,28 +141,22 @@ public static function buscarEspecialidades(){
 // !Funcion Buscar
 public static function buscarAPI(){
     $medico_nombre = $_GET['medico_nombre'];
-    $medico_clinica = $_GET['medico_clinica']; // Agrega esta línea
-    $medico_espec = $_GET['medico_espec'];     // Agrega esta línea
 
-    $sql = "SELECT * FROM medicos WHERE medico_situacion = 1";
+    $sql = "SELECT medicos.medico_id, medicos.medico_nombre, especialidades.espec_nombre AS medico_espec_nombre, clinicas.clinica_nombre AS medico_clinica_nombre 
+    FROM medicos 
+    INNER JOIN especialidades ON medicos.medico_espec = especialidades.espec_id
+    INNER JOIN clinicas ON medicos.medico_clinica = clinicas.clinica_id
+    WHERE medicos.medico_situacion = 1";
 
     if($medico_nombre != ''){
-        $sql .= " AND medico_nombre LIKE '%$medico_nombre%' "; // Agrega un espacio antes de AND
-    }
-
-    if($medico_clinica != ''){
-        $sql .= " AND medico_clinica LIKE '%$medico_clinica%' ";
-    }
-
-    if($medico_espec != ''){
-        $sql .= " AND medico_espec LIKE '%$medico_espec%' ";
+        $sql .= " AND medicos.medico_nombre LIKE '%$medico_nombre%' ";
     }
 
     try {
         $medicos = Medico::fetchArray($sql);
         echo json_encode($medicos);
         
-    } catch (Exception $e) { // Cambia "exception" por "Exception" para que coincida con la clase Exception
+    } catch (exception $e) {
         echo json_encode([
             'detalle' => $e->getMessage(),
             'mensaje'=> 'Ocurrio un Error',
@@ -170,6 +164,8 @@ public static function buscarAPI(){
         ]);
     }
 }
+
+
 
 }
 

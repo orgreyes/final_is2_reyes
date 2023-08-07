@@ -1,8 +1,6 @@
-import { Dropdown } from "bootstrap";
 import Swal from "sweetalert2";
-import { validarFormulario, Toast } from "../funciones";
+import { validarFormulario } from "../funciones";
 
-// !mandamos a llamar todos los botones, formulario y del archivo de vistas
 const formulario = document.querySelector('form');
 const btnBuscar = document.getElementById('btnBuscar');
 const tablaMedicos = document.getElementById('tablaMedicos');
@@ -11,21 +9,17 @@ const btnModificar = document.getElementById('btnModificar');
 const btnCancelar = document.getElementById('btnCancelar');
 const divTabla = document.getElementById('divTabla');
 
-//!Esto es para ocultar el bootn de modificar, cancelar y la tabla
-btnModificar.disabled = true
-btnModificar.parentElement.style.display = 'none'
-btnCancelar.disabled = true
-btnCancelar.parentElement.style.display = 'none'
+btnModificar.disabled = true;
+btnModificar.parentElement.style.display = 'none';
+btnCancelar.disabled = true;
+btnCancelar.parentElement.style.display = 'none';
 
 
 
-
-
-//!Aca mandamos a llamar la funcion para validar que todos los campos esten llenos al momento de guardar.
 const guardar = async (evento) => {
     evento.preventDefault();
 
-    if (!validarFormulario(formulario,['medico_id'])){
+    if (!validarFormulario(formulario, ['medico_id'])) {
         Swal.fire({
             title: 'Campos incompletos',
             text: 'Debe llenar todos los campos del formulario',
@@ -40,20 +34,20 @@ const guardar = async (evento) => {
 
     const body = new FormData(formulario)
     body.delete('medico_id')
-    const url ='/final_is2_reyes/API/medicos/guardar';
+    const url = '/final_is2_reyes/API/medicos/guardar';
     const config = {
-        method : 'POST',
+        method: 'POST',
         body
     }
 
     try {
-        const respuesta = await fetch(url,config);
+        const respuesta = await fetch(url, config);
         const data = await respuesta.json();
 
-         console.log(data);
+        console.log(data);
 
-        const {codigo, mensaje, detalle} = data;
-        
+        const { codigo, mensaje, detalle } = data;
+
         switch (codigo) {
             case 1:
                 formulario.reset();
@@ -69,7 +63,7 @@ const guardar = async (evento) => {
         }
 
         Swal.fire({
-            title:'Guardando Exitoso',
+            title: 'Guardando Exitoso',
             text: 'Los datos se han guardado correctamente',
             icon: 'success',
             showCancelButton: false,
@@ -80,102 +74,79 @@ const guardar = async (evento) => {
     } catch (error) {
         console.log(error);
     }
-
 };
 
-
-
-
-
-
-
-
-
-//!Aca esta la funcion de Buscar.
 const buscar = async () => {
     let medico_nombre = formulario.medico_nombre.value;
     let medico_espec = formulario.medico_espec.value;
     let medico_clinica = formulario.medico_clinica.value;
-    const url =`/final_is2_reyes/API/medicos/buscar?medico_nombre=${medico_nombre}&medico_espec=${medico_espec}&medico_clinica=${medico_clinica}`;
+    const url = `/final_is2_reyes/API/medicos/buscar?medico_nombre=${medico_nombre}&medico_espec=${medico_espec}&medico_clinica=${medico_clinica}`;
     const config = {
-        method : 'GET',
-    }
+        method: 'GET',
+    };
 
-    try{
-        const respuesta = await fetch(url,config)
+    try {
+        const respuesta = await fetch(url, config);
         const data = await respuesta.json();
 
-        console.log(console.log(tablaMedicos.tBodies[0].innerHTML = ''));
+        tablaMedicos.tBodies[0].innerHTML = '';
         console.log(data);
-        
 
-        //!Para crear tablas de forma automatica.
-        const fragment=document.createDocumentFragment();
+        const fragment = document.createDocumentFragment();
 
-        if(data.length > 0){
+        if (data.length > 0) {
             let contador = 1;
             data.forEach(medico => {
-
-                //!Aca se crean los elementos
                 const tr = document.createElement('tr');
                 const td1 = document.createElement('td');
                 const td2 = document.createElement('td');
                 const td3 = document.createElement('td');
                 const td4 = document.createElement('td');
                 const td5 = document.createElement('td');
-                const td6= document.createElement('td');
+                const td6 = document.createElement('td');
                 const buttonModificar = document.createElement('button');
                 const buttonEliminar = document.createElement('button');
 
-                //!Aca se agrega estilos usando Boostrap
-                buttonModificar.classList.add('btn', 'btn-warning');
-                buttonEliminar.classList.add('btn', 'btn-danger');
+                buttonModificar.classList.add('btn', 'btn-warning', 'btn-fill');
+                buttonEliminar.classList.add('btn', 'btn-danger', 'btn-fill');
                 buttonModificar.textContent = 'Modificar';
                 buttonEliminar.textContent = 'Eliminar';
 
-                //!Aca se agrega interactividad a los botnes de modificar y eliminar.
-                buttonModificar.addEventListener('click', () =>  colocarDatos(medico))
-                buttonEliminar.addEventListener('click', () => eliminar(medico.medico_id))
-                
-                td1.innerText = contador;
-                td2.innerText = medico.medico_nombre
-                td3.innerText = medico.medico_espec
-                td4.innerText = medico.medico_clinica
+                buttonModificar.addEventListener('click', () => colocarDatos(medico));
+                buttonEliminar.addEventListener('click', () => eliminar(medico.medico_id));
 
-                //!DOM
+                td1.innerText = contador;
+                td2.innerText = medico.medico_nombre;
+                td3.innerText = medico.medico_espec_nombre;
+                td4.innerText = medico.medico_clinica_nombre;
+
                 td5.appendChild(buttonModificar);
                 td6.appendChild(buttonEliminar);
-                tr.appendChild(td1)
-                tr.appendChild(td2)
-                tr.appendChild(td3)
-                tr.appendChild(td4)
-                tr.appendChild(td5)
-                tr.appendChild(td6)
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+                tr.appendChild(td5);
+                tr.appendChild(td6);
 
                 fragment.appendChild(tr);
                 contador++;
-
-            })
-        }else{
+            });
+        } else {
             const tr = document.createElement('tr');
             const td = document.createElement('td');
             td.innerText = 'No existe Registros';
-            td.colSpan = 5
-            tr.appendChild(td)
+            td.colSpan = 5;
+            tr.appendChild(td);
             fragment.appendChild(tr);
+        }
 
-        };
-
-        tablaMedicos.tBodies[0].appendChild(fragment)
-
-    }catch (error){
-        console.log(error)
+        tablaMedicos.tBodies[0].appendChild(fragment);
+    } catch (error) {
+        console.log(error);
     }
 };
 
-
-//!Aca esta la funcion para que al pulsar el bonton de modificar
-//!se agregen los datos en automatico a el formulario.
 const colocarDatos = (datos) => {
     formulario.medico_nombre.value = datos.medico_nombre
     formulario.medico_espec.value = datos.medico_espec
@@ -193,8 +164,6 @@ const colocarDatos = (datos) => {
     divTabla.style.display = 'none'
 };
 
-
-//!Aca esta la funcino de cancelar la accion de modificar un registro.
 const cancelarAccion = () => {
     btnGuardar.disabled = false
     btnGuardar.parentElement.style.display = ''
@@ -205,11 +174,8 @@ const cancelarAccion = () => {
     btnCancelar.disabled = true
     btnCancelar.parentElement.style.display = 'none'
     divTabla.style.display = ''
-}
+};
 
-// ...
-
-//!Aca esta la funcion de modificar un registro
 const modificar = async () => {
     const medico_id = formulario.medico_id.value;
     const body = new FormData(formulario);
@@ -256,9 +222,6 @@ const modificar = async () => {
         console.log(error);
     }
 };
-
-
-
 
 const eliminar = async (id) => {
     const result = await Swal.fire({
@@ -309,7 +272,6 @@ const eliminar = async (id) => {
         }
     }
 };
-
 
 formulario.addEventListener('submit', guardar);
 btnBuscar.addEventListener('click', buscar);
