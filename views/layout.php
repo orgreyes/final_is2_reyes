@@ -49,7 +49,7 @@
                                 <a class="dropdown-item nav-link text-white " href="/final_is2_reyes/citas"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Citas</a>
                             </li>
                             <li>
-                                <a class="dropdown-item nav-link text-white " href="/final_is2_reyes/detalles"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Detalles</a>
+                                <a class="dropdown-item nav-link text-white " href="/final_is2_reyes/detallecitas"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Detalles</a>
                             </li>
                         </ul>
                     </div> 
