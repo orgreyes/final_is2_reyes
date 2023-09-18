@@ -1,44 +1,33 @@
-CREATE DATABASE hospital;
-
-create table clinicas(
-    clinica_id serial primary key not null,
-    clinica_nombre varchar(50) not null,
-    clinica_situacion smallint not null default 1
+Create table productos (
+    producto_id serial primary key,
+    producto_nombre varchar (60) not null,
+    producto_precio decimal (8,2) not null,
+    producto_situacion char (1) DEFAULT '1'
 );
 
-create table especialidades(
-    espec_id serial primary key not null,
-    espec_nombre varchar(50) not null,
-    espec_situacion smallint not null default 1
+Create table clientes (
+    cliente_id serial primary key,
+    cliente_nombre varchar (60) not null,
+    cliente_nit varchar (10) not null,
+    cliente_situacion char (1) DEFAULT '1'
 );
 
-create table pacientes(
-    paciente_id serial primary key not null,
-    paciente_nombre varchar(50) not null,
-    paciente_dpi varchar(15) not null,
-    paciente_telefono varchar(15) not null,
-    paciente_situacion smallint not null default 1
+Create table detalle_ventas (
+    detalle_id serial not null,
+    detalle_venta integer not null,
+    detalle_producto integer not null,
+    detalle_cantidad smallint not null,
+    detalle_situacion char (1) DEFAULT '1',
+    primary key (detalle_id),
+    foreign key (detalle_venta) REFERENCES ventas (venta_id),
+    foreign key (detalle_producto) REFERENCES productos (producto_id)
 );
 
-create table medicos(
-    medico_id serial primary key not null,
-    medico_nombre varchar(50) not null,
-    medico_espec integer not null,
-    medico_clinica integer not null,
-    medico_situacion smallint not null default 1,
-    foreign key (medico_espec) REFERENCES especialidades (espec_id),
-    foreign key (medico_clinica) REFERENCES clinicas (clinica_id)
-);
-
-CREATE TABLE citas (
-    cita_id SERIAL NOT NULL,
-    cita_paciente INTEGER NOT NULL,
-    cita_medico INTEGER NOT NULL,
-    cita_fecha DATETIME YEAR TO DAY NOT NULL,
-    cita_hora INTERVAL HOUR TO MINUTE NOT NULL,
-    cita_referencia VARCHAR(5) NOT NULL,
-    cita_situacion SMALLINT NOT NULL DEFAULT 1,
-    PRIMARY KEY (cita_id),
-    FOREIGN KEY (cita_paciente) REFERENCES pacientes (paciente_id),
-    FOREIGN KEY (cita_medico) REFERENCES medicos (medico_id)
-);
+Create table ventas (
+    venta_id serial not null,
+    venta_cliente integer not null,
+    venta_fecha datetime year to minute not null,
+    venta_situacion char (1) DEFAULT '1',
+    primary key (venta_id),
+    foreign key (venta_cliente) REFERENCES clientes (cliente_id) 
+);  
